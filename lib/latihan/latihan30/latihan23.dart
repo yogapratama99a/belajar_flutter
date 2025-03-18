@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_project/latihan/latihan30/latihan25.dart';
 
-class Home extends StatefulWidget {
+class Latihan23 extends StatefulWidget {
   @override
-  _HomeState createState() => _HomeState();
+  _Latihan23State createState() => _Latihan23State();
 }
 
-class _HomeState extends State<Home> {
+class _Latihan23State extends State<Latihan23> {
   final List<String> gambar = [
     "beast_titan.jpg",
     "armor_titan.jpg",
@@ -23,26 +24,25 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     timeDilation = 5.0;
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.white, Colors.black, Colors.redAccent],
-          ),
-        ),
-        child: PageView.builder(
-          controller: PageController(viewportFraction: 0.8),
-          itemCount: gambar.length,
-          itemBuilder: (BuildContext context, int i) {
-            return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 50.0),
-              child: Material(
-                elevation: 8.0,
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: <Widget>[
-                    Hero(
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.white, Colors.black, Colors.redAccent],
+              ),
+            ),
+            child: PageView.builder(
+              controller: PageController(viewportFraction: 0.8),
+              itemCount: gambar.length,
+              itemBuilder: (BuildContext context, int i) {
+                return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 50.0),
+                  child: Material(
+                    elevation: 8.0,
+                    child: Hero(
                       tag: gambar[i],
                       child: Material(
                         child: InkWell(
@@ -64,12 +64,34 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                     ),
-                  ],
+                  ),
+                );
+              },
+            ),
+          ),
+          Positioned(
+            bottom: 30,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Latihan25()),
+                  );
+                },
+                child: Text("Go To Latihan 25",
+                style: TextStyle(color: Colors.white),
+                ),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  backgroundColor: Colors.teal,
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -165,5 +187,5 @@ class _HalamanduaState extends State<Halamandua> {
 }
 
 void main() {
-  runApp(MaterialApp(home: Home()));
+  runApp(MaterialApp(home: Latihan23()));
 }

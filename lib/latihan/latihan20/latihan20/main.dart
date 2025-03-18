@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project/latihan/latihan20/latihan20/home.dart';
 import 'package:flutter_project/latihan/latihan20/latihan20/profile.dart';
 import 'package:flutter_project/latihan/latihan20/latihan20/settings.dart';
+import 'package:flutter_project/latihan/latihan30/latihan21.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,8 +17,6 @@ class MyApp extends StatelessWidget {
 }
 
 class BelajarDrawer extends StatefulWidget {
-  BelajarDrawer({super.key});
-
   @override
   _BelajarDrawerState createState() => _BelajarDrawerState();
 }
@@ -41,12 +40,29 @@ class _BelajarDrawerState extends State<BelajarDrawer> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Navigation Drawer")),
-      body: _pages[_selectedIndex],
+      body: Column(
+        children: [
+          Expanded(child: _pages[_selectedIndex]), // Menampilkan halaman sesuai index yang dipilih
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Latihan21()),
+              );
+            },
+            child: Text("Go To Latihan 21", 
+            style: TextStyle(color: Colors.black),
+            ),
+          ),
+          SizedBox(height: 20),
+        ],
+      ),
       drawer: MyDrawer(onTap: (ctx, i) {
         setState(() {
           _selectedIndex = i;
-          Navigator.pop(ctx);
         });
+        Navigator.pop(ctx);
       }),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
