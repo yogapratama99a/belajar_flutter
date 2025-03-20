@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/latihan/latihan30/latihan28.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -154,6 +155,23 @@ class _Latihan27State extends State<Latihan27> {
             onPressed: () {
               kirimData();
             },
+          ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => RegisterParentScreen()),
+              );
+            },
+            child: Text(
+              "Go To Latihan 28",
+              style: TextStyle(color: Colors.white),
+            ),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.green,
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            ),
           ),
         ],
       ),

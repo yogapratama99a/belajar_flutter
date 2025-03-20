@@ -116,7 +116,7 @@ class Halamandua extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("BT21"),
+        title: Text("Titan"),
         backgroundColor: Colors.purpleAccent,
       ),
       body: Stack(
