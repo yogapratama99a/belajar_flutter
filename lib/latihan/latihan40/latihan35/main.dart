@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
+import '/latihan/latihan40/latihan36/main.dart';
 import 'data/api_provider.dart';
 import 'model/popular_movies.dart';
 
@@ -50,26 +50,47 @@ class _HomeState extends State<Home> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (snapshot.hasData && snapshot.data!.results.isNotEmpty) {
-            return ListView.builder(
-              itemCount: snapshot.data!.results.length,
-              itemBuilder: (BuildContext context, int index) {
-                var movie = snapshot.data!.results[index];
-                return moviesItem(
-                  poster: '$imageBaseUrl${movie.posterPath}',
-                  title: movie.title,
-                  date: movie.releaseDate,
-                  voteAverage: movie.voteAverage.toString(),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => MovieDetail(movie: movie),
-                        fullscreenDialog:
-                            true, // Menjadikan halaman detail sebagai modal
-                      ),
-                    );
-                  },
-                );
-              },
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: snapshot.data!.results.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      var movie = snapshot.data!.results[index];
+                      return moviesItem(
+                        poster: movie.posterPath != null &&
+                                movie.posterPath!.isNotEmpty
+                            ? '$imageBaseUrl${movie.posterPath}'
+                            : 'https://via.placeholder.com/500x750',
+                        title: movie.title,
+                        date: movie.releaseDate,
+                        voteAverage: movie.voteAverage.toString(),
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => MovieDetail(movie: movie),
+                              fullscreenDialog: true,
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => MyApp(),
+                        ),
+                      );
+                    },
+                    child: Text('Ke Latihan 36'),
+                  ),
+                ],
+              ),
             );
           } else {
             return Center(child: Text('No Movies Available'));
@@ -97,7 +118,9 @@ class _HomeState extends State<Home> {
               Container(
                 width: 120,
                 child: CachedNetworkImage(
-                  imageUrl: poster,
+                  imageUrl: poster.isNotEmpty
+                      ? poster
+                      : 'https://via.placeholder.com/120x180',
                   placeholder: (context, url) => CircularProgressIndicator(),
                   errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
@@ -152,44 +175,50 @@ class MovieDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(movie.title)),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: CachedNetworkImage(
-                imageUrl: 'https://image.tmdb.org/t/p/w500${movie.posterPath}',
-                placeholder: (context, url) => CircularProgressIndicator(),
-                errorWidget: (context, url, error) => Icon(Icons.error),
+      body: SingleChildScrollView(
+        // Tambahkan ScrollView untuk menghindari overflow
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: CachedNetworkImage(
+                  imageUrl: movie.posterPath != null &&
+                          movie.posterPath!.isNotEmpty
+                      ? 'https://image.tmdb.org/t/p/w500${movie.posterPath}'
+                      : 'https://via.placeholder.com/500x750', // Gambar default
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ),
               ),
-            ),
-            SizedBox(height: 20),
-            Text(
-              movie.title,
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10),
-            Text(
-              'Release Date: ${movie.releaseDate}',
-              style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-            ),
-            SizedBox(height: 10),
-            Text(
-              'Rating: ${movie.voteAverage}',
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blueAccent),
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Overview:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-            ),
-            SizedBox(height: 10),
-            Text(movie.overview),
-          ],
+              SizedBox(height: 20),
+              Text(
+                movie.title,
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10),
+              Text(
+                'Release Date: ${movie.releaseDate}',
+                style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+              ),
+              SizedBox(height: 10),
+              Text(
+                'Rating: ${movie.voteAverage}',
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent),
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Overview:',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              ),
+              SizedBox(height: 10),
+              Text(movie.overview),
+            ],
+          ),
         ),
       ),
     );

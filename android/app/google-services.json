@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "513654413611",
+    "project_id": "belajarflutter4",
+    "storage_bucket": "belajarflutter4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:513654413611:android:9b26372c8084fae55bcd6e",
+        "android_client_info": {
+          "package_name": "com.example.latihan36"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxEDh3yLpqMtLCfWsqbj3dIkgAINKZR0U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
